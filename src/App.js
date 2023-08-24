@@ -4,7 +4,7 @@ import Countries from './component/Countries';
 
 function App() {
   return (
-    <div class="container-fluid">
+    <div className="container-fluid">
       <Nav />
       <Countries />
     </div>
