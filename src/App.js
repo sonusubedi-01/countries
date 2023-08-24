@@ -4,10 +4,10 @@ import Countries from './component/Countries';
 
 function App() {
   return (
-    <>
+    <div class="container-fluid">
       <Nav />
       <Countries />
-    </>
+    </div>
   );
 }
 export default App;
