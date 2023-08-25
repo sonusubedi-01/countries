@@ -6,7 +6,7 @@ function Countries() {
     const [paginatedCountries, setPaginatedcountries] = useState([]);
     const [displayedCountriesCount, setDisplayedCountriesCount] = useState(0);
 
-    const itemsPerPage = 3;
+    const itemsPerPage = 25;
 
     useEffect(() => {
         fetch('https://restcountries.com/v3.1/all')
@@ -40,9 +40,12 @@ function Countries() {
                 paginatedCountries.map(country => <Country flagSrc={country.flags.png} key={country.name.common} name={country.name.common} shortDescription={country.flags.alt} />)
             }
         </div>
+        {
+         displayedCountriesCount < countries.length &&
         <div className="col-1 mx-auto mb-4">
             <button type="button" onClick={showMoreCountries} className="btn btn-success btn-lg ">Show More</button>
         </div>
+        }   
     </>
 }
 export default Countries;
