@@ -15,6 +15,7 @@ function Nav() {
       </div>
     </div>
     <Search />
+    <Theme/>
   </nav>
 }
 export default Nav;
