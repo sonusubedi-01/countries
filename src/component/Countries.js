@@ -33,19 +33,31 @@ function Countries() {
         setDisplayedCountriesCount((previousDisplayedCountriesCount) => previousDisplayedCountriesCount + itemsPerPage);
     }
 
+    function truncateDescription(description) {
+        const limit = 150;
+        if (!description) {
+            return '';
+        }
+        if (description.length > limit) {
+            return description.slice(0, limit).concat('...');
+        }
+
+        return description;
+    }
+
 
     return <>
         <div className="d-flex flex-wrap gap-3 justify-content-evenly">
             {
-                paginatedCountries.map(country => <Country flagSrc={country.flags.png} key={country.name.common} name={country.name.common} shortDescription={country.flags.alt} />)
+                paginatedCountries.map(country => <Country flagSrc={country.flags.png} key={country.name.common} name={country.name.common} shortDescription={truncateDescription(country.flags.alt)} />)
             }
         </div>
         {
-         displayedCountriesCount < countries.length &&
-        <div className="col-1 mx-auto mb-4">
-            <button type="button" onClick={showMoreCountries} className="btn btn-success btn-lg ">Show More</button>
-        </div>
-        }   
+            displayedCountriesCount < countries.length &&
+            <div className="col-1 mx-auto mb-4">
+                <button type="button" onClick={showMoreCountries} className="btn btn-success btn-lg ">Show More</button>
+            </div>
+        }
     </>
 }
 export default Countries;
