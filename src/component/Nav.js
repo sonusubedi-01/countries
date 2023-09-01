@@ -1,7 +1,12 @@
 import Search from './Search';
 import Theme from './Theme';
 
-function Nav() {
+function Nav(props) {
+
+  function handleSearch(searchTerm){
+    props.handleSearch(searchTerm);
+  }
+
   return <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5 mt-3">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">Countries</a>
@@ -14,7 +19,7 @@ function Nav() {
         </div>
       </div>
     </div>
-    <Search />
+    <Search handleSearch = {handleSearch} />
     <Theme/>
   </nav>
 }
