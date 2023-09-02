@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Country from './Country';
+import ErrorMsg  from './ErrorMsg';
 
 function Countries(props) {
     const [countries, setCountries] = useState([]);
@@ -7,6 +8,8 @@ function Countries(props) {
     const [displayedCountriesCount, setDisplayedCountriesCount] = useState(0);
     const [searchTerm, setSearchTerm] = useState();
     const [filteredCountries, setFilteredCountries] = useState([]);
+    const [errorMessage, setErrorMessage] = useState();
+    
 
     const itemsPerPage = 25;
 
@@ -21,14 +24,19 @@ function Countries(props) {
         async function getResponse() {
             try {
                 const response = await fetch('https://restcountries.com/v3.1/all');
+                if (!response.ok) {
+                    const errorResponse = await response.json();
+                    throw new Error(`${errorResponse.message}: ${response.status}`);              
+                }
                 const data = await response.json();
                 setCountries(data);
                 setFilteredCountries(data);
                 setPaginatedcountries(data.slice(0, itemsPerPage))
                 setDisplayedCountriesCount(itemsPerPage);
+                setErrorMessage();
 
-            } catch (error) {
-                console.log('Error in post data', error);
+            }catch (error) {
+                setErrorMessage(error.message);
             }
         }
         getResponse();
@@ -72,6 +80,8 @@ function Countries(props) {
 
 
     return <>
+       {errorMessage && <ErrorMsg message={errorMessage}/>}
+
         <div className="d-flex flex-wrap gap-3 justify-content-evenly">
             {
                 paginatedCountries.map(country => <Country flagSrc={country.flags.png} key={country.name.common} name={country.name.common} shortDescription={truncateDescription(country.flags.alt)} />)
